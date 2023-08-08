@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//img[@src = 'https://maps.gstatic.com/mapfiles/transparent.png']"
+}

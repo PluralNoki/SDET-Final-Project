@@ -23,6 +23,8 @@ class HomePage{
     enregistrerButton = "//button[text()='Enregistrer']";
         //List Your Property
     listYourPropertyLink = "//a[contains(@aria-label, 'List your property')]";
+        //Support
+    supportLink = "//a[@id='support-cs']";
     
     
     //--INTERACTIVE FUNCTIONS FOR HOMEPAGE--//
@@ -109,6 +111,10 @@ class HomePage{
                 break;
             }
         }
+    }
+
+    async clickSupportLink(){
+        await $(this.supportLink).click();
     }
 
     //#endregion

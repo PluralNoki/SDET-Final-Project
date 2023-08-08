@@ -11,6 +11,7 @@ class ListYourPropertyPage{
     bedroomCount = "//input[@name='bedroom-count']";
     bathroomCount = "//input[@name='bathroom-count']";
     whereIsYourPropertyLocated = "//h1[contains(text(),'Where is your property located?')]";
+    movePinText = "//span[contains(text(),'Move the pin to adjust the location of your proper')]";
         //Buttons
     privateResidenceButton = "//div[@id='classification_privateResidence']";
     increaseBedroomButton = "//button[@aria-label='Increase bedrooms']";
@@ -18,9 +19,12 @@ class ListYourPropertyPage{
     increaseBathroomButton = "//button[@aria-label='Increase bathrooms']";
     decreaseBathroomButton = "//button[@aria-label='Decrease bathrooms']";
     nextButton = "//button[@id='propertyInfoNextBtn']";
+    firstAutoSuggestAddress = "//ul[@role='menu']/child::li[1]";
         //Inputs
     addressInput = "//input[@id='locationTypeAhead']";
-
+        //Map
+    mapElement = "//section[@class='map-section location']";
+    pinElement = "//img[@src = 'https://maps.gstatic.com/mapfiles/transparent.png']";
 
     //--INTERACTIVE FUNCTIONS FOR HOMEPAGE--//
 
@@ -51,6 +55,22 @@ class ListYourPropertyPage{
         return await $(this.whereIsYourPropertyLocated).isDisplayed();
     }
 
+    async verifyMapIsDisplayed(){
+        const mapDisplay = await $(this.mapElement).waitForDisplayed({timeout: 4000, 
+            timeoutMsg: 'Map is not displayed'});
+        return await $(this.mapElement).isDisplayed();
+    }
+
+    async verifyPinIsDisplayed(){
+        return await $(this.pinElement).isDisplayed();
+    }
+
+    async verifyMovePinTextIsDisplayed(){
+        const pinTextDisplay = await $(this.movePinText).waitForDisplayed({timeout: 4000, 
+            timeoutMsg: 'MovePinText is NOT displayed'});
+        return await $(this.movePinText).isDisplayed();
+    }
+
     //#endregion
 
     //#region Clickers
@@ -77,6 +97,10 @@ class ListYourPropertyPage{
 
     async clickNextButton(){
         await $(this.nextButton).click();
+    }
+
+    async clickFirstAutoSuggestion(){
+        await $(this.firstAutoSuggestAddress).click();
     }
 
     //#endregion
@@ -120,7 +144,12 @@ class ListYourPropertyPage{
     }
 
     async inputAddress(address){
-        await $(addressInput).setValue(address);
+        //Turns out you need to click the address box to enable
+        //autosuggestions. Then you can set the value and populate
+        //the autosuggestions.
+
+        await $(this.addressInput).click();
+        await $(this.addressInput).setValue(address);
     }
 
     //#endregion

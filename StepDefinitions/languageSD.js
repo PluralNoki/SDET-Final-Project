@@ -1,4 +1,4 @@
-const {Given, Then} = require('@wdio/cucumber-framework');
+const {Then} = require('@wdio/cucumber-framework');
 const {expect} = require('chai');
 const homepage = require('../Pages/HomePage.js');
 
