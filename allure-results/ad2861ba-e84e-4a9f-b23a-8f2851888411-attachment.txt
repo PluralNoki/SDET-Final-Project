@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//div[contains(text(),'Step 1 of 3')]"
+}

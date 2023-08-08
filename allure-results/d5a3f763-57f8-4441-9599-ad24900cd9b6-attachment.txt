@@ -1,0 +1,4 @@
+{
+  "using": "css selector",
+  "value": "button[@data-stid='button-type-picker-trigger']"
+}
