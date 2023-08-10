@@ -4,10 +4,12 @@ class HomePage{
     //--LOCATORS--//
 
 
-        //Sign In
+        //Buttons and Selectors
     signInSelector = "//button[contains(text(),'Sign in')]";
     signInButton = "//a[@data-stid='link-header-account-signin']";
     travelerButton = "//button[@data-stid='open-room-picker']";
+    datesButton = "//button[@id='date_form_field-btn']";
+    calendarBackButton = "//div[contains(@class, 'date-picker-menu-pagination')]/child::button[1]";
         //Children
     increaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[2]";
     decreaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[1]";
@@ -25,6 +27,8 @@ class HomePage{
     listYourPropertyLink = "//a[contains(@aria-label, 'List your property')]";
         //Support
     supportLink = "//a[@id='support-cs']";
+        //Dates
+    disabledDates = "//button[@class='uitk-date-picker-day is-disabled']";
     
     
     //--INTERACTIVE FUNCTIONS FOR HOMEPAGE--//
@@ -48,6 +52,19 @@ class HomePage{
             for(let i = currentChildren; i != amountOfChildren; i++){
                 await this.clickIncreaseChildrenButton();
             }
+        }
+    }
+
+    async setCalendarToCurrentMonth(){
+        //In short, press the back button till it's disabled
+        if(!$(this.calendarBackButton).isClickable()){
+            console.error("NOT CLICKABLE");
+            return;
+        }
+
+        while(await $(this.calendarBackButton).isClickable()){
+            console.error("WHY IS IT CLICKABLE");
+            await $(this.calendarBackButton).click();
         }
     }
 
@@ -117,6 +134,10 @@ class HomePage{
         await $(this.supportLink).click();
     }
 
+    async clickOnDates(){
+        await $(this.datesButton).click();
+    }
+
     //#endregion
     
     //#region Getters
@@ -165,6 +186,38 @@ class HomePage{
             return true;
         }
         else return false;
+    }
+
+    async verifyPastDatesAreDisabled(){
+        //Current date
+        let date = new Date().getDate();
+
+        //All disabled dates
+        const disabledDatesElements = await $$(this.disabledDates);
+
+        //Getting the date of each element
+        let disabledDatesArray = [];
+
+        for(let i = 0; i < disabledDatesElements.length; i++){
+            let item = disabledDatesElements[i];
+            disabledDatesArray.push(await item.getAttribute('data-day'));
+        }
+
+        //Yesterday, should be the highest number in the disabled dates list
+        date--;
+
+        //Verify above statement
+        const highestDate = Math.max(...disabledDatesArray);
+
+        if(date==highestDate){
+            return true;
+        }
+        else return false;
+    }
+
+    async verifyBackButtonOfCurrentMonthIsDisabled(){
+        const enabled = !await $(this.calendarBackButton).isEnabled();
+        return enabled;
     }
 
     //#endregion

@@ -3,6 +3,10 @@ const {expect} = require('chai');
 const homepage = require('../Pages/HomePage.js');
 const signinpage = require('../Pages/SignInPage.js');
 
+/* --A Sample THEN statement for copying
+Then(/^$/, async function(){    
+});
+*/
 
 Given(/^I am on hotels website$/, async function(){
     await browser.url('/');

@@ -2,6 +2,11 @@ const {Then} = require('@wdio/cucumber-framework');
 const {expect} = require('chai');
 const homepage = require('../Pages/HomePage.js');
 
+/* --A Sample THEN statement for copying
+Then(/^$/, async function(){    
+});
+*/
+
 Then(/^I click on travelers button$/, async function(){
     await homepage.clickTravelerButton();
 });
