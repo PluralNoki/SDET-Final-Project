@@ -6,3 +6,5 @@ Feature: Invalid Phone Number
         And I enter 0000000000 in phone number
         And I click on Get the app button
         And I verify Please enter a valid phone number is displayed
+
+        //Currently unfinished - there is nowhere to enter a phone number

@@ -7,3 +7,5 @@ Feature: Empty Feedback Error
         And I click on submit
         And I verify error message is displayed
         And I verify red-box is displayed around overall section
+
+        //Currently unfinished, there is no error message
