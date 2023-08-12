@@ -10,6 +10,9 @@ class HomePage{
     travelerButton = "//button[@data-stid='open-room-picker']";
     datesButton = "//button[@id='date_form_field-btn']";
     calendarBackButton = "//div[contains(@class, 'date-picker-menu-pagination')]/child::button[1]";
+    calendarForwardButton = "//div[contains(@class, 'date-picker-menu-pagination')]/child::button[2]";
+    getTheApp = "//div[@id='mobile-app-download-button']/child::div/child::a";
+    goingToButton = "//button[@aria-label='Going to']";
         //Children
     increaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[2]";
     decreaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[1]";
@@ -29,6 +32,12 @@ class HomePage{
     supportLink = "//a[@id='support-cs']";
         //Dates
     disabledDates = "//button[@class='uitk-date-picker-day is-disabled']";
+        //Text
+    leftDate = "//div[@class='uitk-date-picker-menu-months-container']/child::div[1]/child::h2";
+    desinationOptions = "//button[@class='uitk-button uitk-button-medium uitk-button-fullWidth has-subtext destination_form_field-result-item-button result-item-button']";
+        //Input
+    destinationInput = "//input[@data-stid='destination_form_field-menu-input']";
+
     
     
     //--INTERACTIVE FUNCTIONS FOR HOMEPAGE--//
@@ -65,6 +74,76 @@ class HomePage{
         while(await $(this.calendarBackButton).isClickable()){
             console.error("WHY IS IT CLICKABLE");
             await $(this.calendarBackButton).click();
+        }
+    }
+
+    async enterPhoneNumber(number){
+        //unfinished - waiting for response from teacher
+        //associated with invalidPhone feature
+    }
+
+    async enterCheckInDate(desiredMonth, desiredDay, desiredYear){
+        await $(this.datesButton).click();
+
+        const leftDisplayedYear = await $(this.leftDate);
+        const leftDisplayYearText = await leftDisplayedYear.getText();
+        let dateDisplay = leftDisplayYearText.split(" ");
+        let month = dateDisplay[0];
+        let year = dateDisplay[1];
+
+        //Get to year
+        if(desiredYear>year){
+
+            let currentYear = 1900;
+            let htmlText;
+            while(currentYear!=desiredYear){
+                htmlText = await $(this.leftDate).getHTML(false);
+                currentYear = await htmlText.split(" ")[1];
+                if(currentYear.localeCompare(desiredYear)===true){
+                    break;
+                }
+                else{
+                    await $(this.calendarForwardButton).click();
+                }
+            }
+        }
+        else{
+            console.log("Desired year is " + desiredYear + " and current year is " + year);
+        }
+
+        //Get to month
+        if(desiredMonth>month){
+            let currentMonth = "0";
+            let htmlText;
+            while(currentMonth!=desiredMonth){
+                htmlText = await $(this.leftDate).getHTML(false);
+                currentMonth = htmlText.split(" ")[0];
+                if(currentMonth==desiredMonth){
+                    break;
+                }
+                else{
+                    await $(this.calendarForwardButton).click();
+                }
+            }
+        }
+
+        
+
+    }
+
+
+    async searchLocation(location){
+        await $(this.goingToButton).click();
+        await $(this.destinationInput).setValue(location);
+        await browser.pause(2000);
+        for await (const elm of $$("//button[class='uitk-button uitk-button-medium uitk-button-fullWidth has-subtext destination_form_field-result-item-button result-item-button']")){
+            console.log(await elm.getAttribute('aria-label'));
+            const text = await elm.getAttribute('aria-label');
+            if(text.contains(location)){
+                await elm.click();
+                console.log("BROKEN");
+                break;
+            }
         }
     }
 
@@ -220,8 +299,20 @@ class HomePage{
         return enabled;
     }
 
+    async verifyDatesFieldIsExpanded(){
+
+    }
+
     //#endregion
 
+    //#region Scrollers
+
+    async scrollToGetTheAppButton(){
+        const button = await $(this.getTheApp);
+        await button.scrollIntoView(false);
+    }
+
+    //#endregion
 
 }
 
