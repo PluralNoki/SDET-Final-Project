@@ -13,6 +13,8 @@ class HomePage{
     calendarForwardButton = "//div[contains(@class, 'date-picker-menu-pagination')]/child::button[2]";
     getTheApp = "//div[@id='mobile-app-download-button']/child::div/child::a";
     goingToButton = "//button[@aria-label='Going to']";
+    dateDoneButton = "//button[@data-stid='apply-date-picker']";
+    searchButton = "//button[@id='search_button']";
         //Children
     increaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[2]";
     decreaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[1]";
@@ -32,6 +34,9 @@ class HomePage{
     supportLink = "//a[@id='support-cs']";
         //Dates
     disabledDates = "//button[@class='uitk-date-picker-day is-disabled']";
+    leftMonthDateButtons = "//div[@class='uitk-date-picker-menu-months-container']/child::div[1]/child::table/child::tbody/descendant::button";
+    leftMonthDateButtons = "//div[@class='uitk-date-picker-menu-months-container']/child::div[2]/child::table/child::tbody/descendant::button";
+    rightMonth = "//div[@class='uitk-date-picker-menu-months-container']/child::div[1]";
         //Text
     leftDate = "//div[@class='uitk-date-picker-menu-months-container']/child::div[1]/child::h2";
     desinationOptions = "//button[@class='uitk-button uitk-button-medium uitk-button-fullWidth has-subtext destination_form_field-result-item-button result-item-button']";
@@ -83,8 +88,6 @@ class HomePage{
     }
 
     async enterCheckInDate(desiredMonth, desiredDay, desiredYear){
-        await $(this.datesButton).click();
-
         const leftDisplayedYear = await $(this.leftDate);
         const leftDisplayYearText = await leftDisplayedYear.getText();
         let dateDisplay = leftDisplayYearText.split(" ");
@@ -116,7 +119,7 @@ class HomePage{
             let currentMonth = "0";
             let htmlText;
             while(currentMonth!=desiredMonth){
-                htmlText = await $(this.leftDate).getHTML(false);
+                htmlText = await $(this.leftDate).getText(false);
                 currentMonth = htmlText.split(" ")[0];
                 if(currentMonth==desiredMonth){
                     break;
@@ -127,21 +130,46 @@ class HomePage{
             }
         }
 
-        
+        const leftMonthDates = await $$(this.leftMonthDateButtons);
+        console.log(leftMonthDates.length);
+        let dateFound = false;
+        for(let elm of leftMonthDates){
+            const day = await elm.getAttribute('data-day');
+            if(day==desiredDay){
+                await $(elm).click();
+                dateFound = true;
+                break;
+            }
+        }
+        if(dateFound) return;
+        const rightMonthDates = await $$(this.leftMonthDateButtons);
+        for(let elm of rightMonthDates){
+            const day = await elm.getAttribute('data-day');
+            if(day==desiredDay){
+                await $(elm).click();
+                dateFound = true;
+                break;
+            }
+        }
 
     }
-
 
     async searchLocation(location){
         await $(this.goingToButton).click();
         await $(this.destinationInput).setValue(location);
-        await browser.pause(2000);
-        for await (const elm of $$("//button[class='uitk-button uitk-button-medium uitk-button-fullWidth has-subtext destination_form_field-result-item-button result-item-button']")){
-            console.log(await elm.getAttribute('aria-label'));
+        
+        await browser.waitUntil( async () =>{
+            const opts = await $$(this.desinationOptions);
+            return opts.length>0;
+        }, {
+            timeout: 3500,
+            timeoutMsg: 'Options did not appear'
+        });
+
+        for await (const elm of $$(this.desinationOptions)){
             const text = await elm.getAttribute('aria-label');
-            if(text.contains(location)){
+            if(text.includes(location)){
                 await elm.click();
-                console.log("BROKEN");
                 break;
             }
         }
@@ -214,6 +242,18 @@ class HomePage{
     }
 
     async clickOnDates(){
+        await $(this.datesButton).click();
+    }
+
+    async clickDateDoneButton(){
+        await $(this.dateDoneButton).click();
+    }
+
+    async clickSearchButton(){
+        await $(this.searchButton).click();
+    }
+
+    async clickDatesButton(){
         await $(this.datesButton).click();
     }
 

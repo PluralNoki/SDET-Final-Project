@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//div[@class='uitk-text uitk-type-500 uitk-type-medium uitk-text-emphasis-theme']"
+}

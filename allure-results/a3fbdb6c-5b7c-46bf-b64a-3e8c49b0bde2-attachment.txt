@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//div[@data-stid='property-listing-results']/child::div[3]"
+}
