@@ -7,6 +7,7 @@ class HomePage{
         //Buttons and Selectors
     signInSelector = "//button[contains(text(),'Sign in')]";
     signInButton = "//a[@data-stid='link-header-account-signin']";
+    signUpButton = "//a[@data-stid='link-header-account-signup']";
     travelerButton = "//button[@data-stid='open-room-picker']";
     datesButton = "//button[@id='date_form_field-btn']";
     calendarBackButton = "//div[contains(@class, 'date-picker-menu-pagination')]/child::button[1]";
@@ -193,6 +194,10 @@ class HomePage{
 
     async clickSignInButton(){
         return await $(this.signInButton).click();
+    }
+
+    async clickSignUpButton(){
+        await $(this.signUpButton).click();
     }
 
     async clickTravelerButton(){

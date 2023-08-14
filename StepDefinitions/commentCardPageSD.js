@@ -1,8 +1,6 @@
-const {Then} = require('@wdio/cucumber-framework');
+const {Given, Then} = require('@wdio/cucumber-framework');
 const {expect} = require('chai');
-const homepage = require('../Pages/HomePage.js');
-const customerServicePage = require('../Pages/CustomerServicePage.js');
-const commentCardPage = require('../Pages/CommendCardPage.js');
+const commentCardPage = require('../Pages/CommentCardPage');
 
 /* --A Sample THEN statement for copying
 Then(/^$/, async function(){    
@@ -28,4 +26,6 @@ Then(/^I select any ease of use rating$/, async function(){
 Then(/^I verify Thankyou For Your Feedback is displayed$/, async function(){    
 });
 
-
+Then(/^I click on submit$/, async function(){    
+    await commentCardPage.clickSubmit();
+});

@@ -1,24 +1,11 @@
 const {Given, Then} = require('@wdio/cucumber-framework');
 const {expect} = require('chai');
-const homepage = require('../Pages/HomePage.js');
 const signinpage = require('../Pages/SignInPage.js');
 
 /* --A Sample THEN statement for copying
 Then(/^$/, async function(){    
 });
 */
-
-Given(/^I am on hotels website$/, async function(){
-    await browser.url('/');
-});
-
-Then(/^I click on the sign in link$/, async function(){
-    await homepage.clickSignInSelector();
-});
-
-Then(/^I click on the sign in button$/, async function(){
-    await homepage.clickSignInButton();
-});
 
 Then(/^I enter an invalid email address$/, async function(){
     await signinpage.enterTextIntoEmailProvider('hullabaloo');

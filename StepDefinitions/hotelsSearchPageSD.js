@@ -1,30 +1,11 @@
-const {Then} = require('@wdio/cucumber-framework');
+const {Given, Then} = require('@wdio/cucumber-framework');
 const {expect} = require('chai');
-const homepage = require('../Pages/HomePage.js');
-const hotelsSearchPage = require('../Pages/HotelsSearchPage.js');
+const hotelsSearchPage = require('../Pages/HotelsSearchPage');
 
 /* --A Sample THEN statement for copying
 Then(/^$/, async function(){    
 });
 */
-
-Then(/^I search Manhattan, NY$/, async function(){    
-    await homepage.searchLocation('Manhattan');
-});
-
-Then(/^I enter check-in date as Feb-10-2024$/, async function(){
-    await homepage.clickDatesButton();
-    await homepage.enterCheckInDate("February",12,2024);
-});
-
-Then(/^I enter check-out date as Feb-16-2024$/, async function(){    
-    await homepage.enterCheckInDate("February", 16, 2024);
-});
-
-Then(/^I click search button$/, async function(){    
-    await homepage.clickDateDoneButton();
-    await homepage.clickSearchButton();
-});
 
 Then(/^I click 5 from star-rating$/, async function(){    
     await hotelsSearchPage.clickFiveStarCheckbox();
