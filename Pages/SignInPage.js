@@ -2,8 +2,11 @@
 class SignInPage{
 
     //Locators
+        //Inputs
     emailAddressProvider = "//input[@id='loginFormEmailInput']";
+        //Buttons
     continueButton = "//button[@id='loginFormSubmitButton']";
+        //Messages
     errorMessage = "//div[@id='loginFormEmailInput-error']"
 
     //Functions for interacting with the SignIn page

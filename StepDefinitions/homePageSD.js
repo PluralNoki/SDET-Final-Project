@@ -89,24 +89,26 @@ Then(/^I click on travelers button$/, async function(){
     await homepage.clickTravelerButton();
 });
 
-Then(/^I set children to 0$/, async function(){
-    await homepage.enterChildren(0);
-    await browser.pause(2000);
+Then(/^I set (.+) to (.+)$/, async function(string, int){    
+    switch(string){
+        case 'adults':
+            await homepage.setAdults(int);
+            break;
+        case 'children':
+            await homepage.setChildren(int);
+            break;
+        default:
+            break;
+    } 
 });
 
-Then(/^I set children to 2$/, async function(){
-    await homepage.enterChildren(2);
-    await browser.pause(2000);
+Then(/^I click travelers done button$/, async function(){
+    return await homepage.clickTravelersDoneButton();
 });
 
-Then(/^I set children to 5$/, async function(){
-    await homepage.enterChildren(5);
-    await browser.pause(2000);
-});
-
-Then(/^I set children to 6$/, async function(){
-    await homepage.enterChildren(6);
-    await browser.pause(2000);
+Then(/^I make age of child (.+) to (.+)$/, async function(child, age){
+    if(age=='under 1') age = 0;
+    await homepage.setChildAge(child,age);
 });
 
 Then(/^I verify children-age dropdowns are 2$/, async function(){
@@ -165,4 +167,9 @@ Then(/^I verify past dates are disabled$/, async function(){
 Then(/^I verify back button on current month is disabled$/, async function(){ 
        const disabled = await homepage.verifyBackButtonOfCurrentMonthIsDisabled();
        expect(disabled, 'Back button of current month is NOT disabled.').to.be.true;
+});
+
+Then(/^I verify total travelers adds up to (.+)$/, async function(total){
+    const isVerified = await homepage.verifyTravelersNumbersAddUp(total); 
+    expect(isVerified, "Total travelers doesn't add up to previous steps.").to.be.true;
 });

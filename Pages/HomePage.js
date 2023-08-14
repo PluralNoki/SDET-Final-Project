@@ -16,11 +16,12 @@ class HomePage{
     goingToButton = "//button[@aria-label='Going to']";
     dateDoneButton = "//button[@data-stid='apply-date-picker']";
     searchButton = "//button[@id='search_button']";
-        //Children
+    increaseAdultCount = "//input[@id='traveler_selector_adult_step_input-0']/preceding-sibling::button";
+    decreaseAdultCount = "//input[@id='traveler_selector_adult_step_input-0']/following-sibling::button";
     increaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[2]";
     decreaseChildrenCountButton = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::button[1]";
-    currentChildCountElement = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::input";
-    //Returns an array of currently displayed children
+    travelersDoneButton = "//button[@id='traveler_selector_done_button']";
+        //Returns an array of currently displayed children
     childrenDropdown = '//div[@class="uitk-layout-flex uitk-layout-flex-flex-wrap-wrap"]/*'
         //Language
     englishButton = "//button[@data-stid='button-type-picker-trigger']";
@@ -41,6 +42,9 @@ class HomePage{
         //Text
     leftDate = "//div[@class='uitk-date-picker-menu-months-container']/child::div[1]/child::h2";
     desinationOptions = "//button[@class='uitk-button uitk-button-medium uitk-button-fullWidth has-subtext destination_form_field-result-item-button result-item-button']";
+    adultCountElement = "//input[@id='traveler_selector_adult_step_input-0']";
+    childCountElement = "//label[@for='traveler_selector_children_step_input-0']/following-sibling::div/child::input";
+    travelersText= "//input[@class='uitk-field-input is-hidden']";
         //Input
     destinationInput = "//input[@data-stid='destination_form_field-menu-input']";
 
@@ -51,34 +55,46 @@ class HomePage{
 
     //#region Setters
 
-    async enterChildren(amountOfChildren){
-        //We need to know how many children have already been entered
-        const currentChildren = await this.getCurrentChildCount();
+    async setChildren(desiredChildCount){
+        let currentChildCount = await $(this.childCountElement).getAttribute('value');
+        while(currentChildCount!=desiredChildCount){
+            currentChildCount = await $(this.childCountElement).getAttribute('value');
+            if(desiredChildCount>currentChildCount){
+                await $(this.increaseChildrenCountButton).click();
+            }
+            else if(desiredChildCount<currentChildCount){
+                await $(this.decreaseChildrenCountButton).click();
+            }
+            else break;
+        }
+    }
 
-        //We need to change the number to match the desired amount of children
-            //We have more children than we want - decrease them
-        if(currentChildren > amountOfChildren){
-            for(let i = currentChildren; i != amountOfChildren; i--){
-                await this.clickDecreaseChildrenButton();
+    async setAdults(adultCount){
+        let currentAdultCount = await $(this.adultCountElement).getAttribute('value');
+        while(currentAdultCount!=adultCount){
+            currentAdultCount = await $(this.adultCountElement).getAttribute('value');
+            if(adultCount<currentAdultCount){
+                await $(this.increaseAdultCount).click();
             }
-        }
-            //We have less children than we want - increase them
-        else if (amountOfChildren > currentChildren){
-            for(let i = currentChildren; i != amountOfChildren; i++){
-                await this.clickIncreaseChildrenButton();
+            else if(adultCount>currentAdultCount){
+                await $(this.decreaseAdultCount).click();
             }
+            else break;
         }
+    }
+
+    async setChildAge(child, age){
+        const ageButton =  await $(`//div[@class="uitk-layout-flex uitk-layout-flex-flex-wrap-wrap"]/child::div[${child}]//child::option[@value="${age}"]`);
+        await ageButton.click();
     }
 
     async setCalendarToCurrentMonth(){
         //In short, press the back button till it's disabled
         if(!$(this.calendarBackButton).isClickable()){
-            console.error("NOT CLICKABLE");
             return;
         }
 
         while(await $(this.calendarBackButton).isClickable()){
-            console.error("WHY IS IT CLICKABLE");
             await $(this.calendarBackButton).click();
         }
     }
@@ -112,7 +128,6 @@ class HomePage{
             }
         }
         else{
-            console.log("Desired year is " + desiredYear + " and current year is " + year);
         }
 
         //Get to month
@@ -132,7 +147,6 @@ class HomePage{
         }
 
         const leftMonthDates = await $$(this.leftMonthDateButtons);
-        console.log(leftMonthDates.length);
         let dateFound = false;
         for(let elm of leftMonthDates){
             const day = await elm.getAttribute('data-day');
@@ -228,6 +242,10 @@ class HomePage{
         return await $(this.enregistrerButton).click();
     }
 
+    async clickTravelersDoneButton(){
+        return await $(this.travelersDoneButton).click();
+    }
+
     async clickListYourPropertyLink(){
         await $(this.listYourPropertyLink).click();
 
@@ -269,12 +287,6 @@ class HomePage{
     async getAmountOfChildrenAgeDropDowns(){
         const children = await $$(this.childrenDropdown);
         return children.length;
-    }
-
-    async getCurrentChildCount(){
-        const currentCount = $(this.currentChildCountElement).getAttribute('value');
-        console.log(currentCount);
-        return currentCount;
     }
 
     async getLanguageDisplayed(){
@@ -346,6 +358,15 @@ class HomePage{
 
     async verifyDatesFieldIsExpanded(){
 
+    }
+
+    async verifyTravelersNumbersAddUp(totalShouldBe){
+        let total = 0;
+        const text = await $(this.travelersText).getAttribute('value');
+        const textArray = text.split(" ");
+        const textTotalTravelers = textArray[0];
+        if(totalShouldBe==textTotalTravelers) return true;
+        return false;
     }
 
     //#endregion
