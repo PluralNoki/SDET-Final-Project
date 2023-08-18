@@ -3,7 +3,6 @@ class HomePage{
 
     //--LOCATORS--//
 
-
         //Buttons and Selectors
     signInSelector = "//button[contains(text(),'Sign in')]";
     signInButton = "//a[@data-stid='link-header-account-signin']";
@@ -30,6 +29,8 @@ class HomePage{
     englishSelector = "//option[@value='en_CA']";
     saveButton = "//button[text()='Save']";
     enregistrerButton = "//button[text()='Enregistrer']";
+    regionSelector = "//select[@id='site-selector']";
+    usaRegion = "//select[@id='site-selector']/child::option[@value='300000001']";
         //List Your Property
     listYourPropertyLink = "//a[contains(@aria-label, 'List your property')]";
         //Support
@@ -194,6 +195,14 @@ class HomePage{
 
     //#region Clickers
 
+    async clickUSARegion(){
+        return await $(this.usaRegion).click();
+    }
+
+    async clickRegionSelector(){
+        return await $(this.regionSelector).click();
+    }
+
     async clickIncreaseChildrenButton(){
         return await $(this.increaseChildrenCountButton).click();
     }
@@ -207,11 +216,12 @@ class HomePage{
     }
 
     async clickSignInButton(){
+        await $(this.signInButton).waitForClickable();
         return await $(this.signInButton).click();
     }
 
     async clickSignUpButton(){
-        await $(this.signUpButton).click();
+        return await $(this.signUpButton).click();
     }
 
     async clickTravelerButton(){
@@ -278,6 +288,10 @@ class HomePage{
 
     async clickDatesButton(){
         await $(this.datesButton).click();
+    }
+
+    async clickGetTheAppButton(){
+        await $(this.getTheApp).click();
     }
 
     //#endregion

@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//a[contains(text(), 'One Key Rewards Terms & Conditions')]"
+}

@@ -24,3 +24,8 @@ Then(/^I verify error message is displayed$/, async function(){
 When(/^I enter {string} in email address$/, async function(text){
         await signinpage.enterTextIntoEmailProvider(text);
 });
+
+Then(/^I click One Key Rewards Terms and Conditions link$/, async function(){
+    await signinpage.clickOneKeyTermsAndConditionsLink();
+});
+

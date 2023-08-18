@@ -1,13 +1,17 @@
 //The signin page of Hotels.com
 class SignInPage{
 
-    //Locators
+        //--LOCATORS--//
+
         //Inputs
     emailAddressProvider = "//input[@id='loginFormEmailInput']";
         //Buttons
     continueButton = "//button[@id='loginFormSubmitButton']";
         //Messages
     errorMessage = "//div[@id='loginFormEmailInput-error']"
+        //Links
+    oneKeyTermsLink = "//a[contains(text(), 'One Key Rewards Terms & Conditions')]";
+
 
     //Functions for interacting with the SignIn page
     async enterTextIntoEmailProvider(textToEnter){
@@ -23,6 +27,11 @@ class SignInPage{
         const errMsgStatus = await errMsg.isDisplayed();
         return errMsgStatus;
     }
+ 
+    async clickOneKeyTermsAndConditionsLink(){
+        await $(this.oneKeyTermsLink).click();
+    }
+
 }
 
 module.exports = new SignInPage();

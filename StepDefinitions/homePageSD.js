@@ -7,6 +7,15 @@ Then(/^$/, async function(){
 });
 */
 
+Given(/^I am in USA location$/, async function (){
+    await homepage.clickEnglishButton();
+    await homepage.clickRegionSelector();
+    await homepage.clickUSARegion();
+    await browser.pause(1500);
+    await homepage.clickSaveButton();
+    await browser.pause(1500);
+});
+
 Then(/^I click on the sign up button$/, async function(){    
     await homepage.clickSignUpButton();
 });
@@ -22,7 +31,6 @@ Then(/^I click on the sign in button$/, async function(){
 Then(/^I click on List Your Property$/, async function(){   
     await homepage.clickListYourPropertyLink(); 
 });
-
 
 Then(/^I click on English language$/, async function(){
     await homepage.clickEnglishButton();    
@@ -63,10 +71,14 @@ Then(/^I scroll to Get the app button$/, async function(){
     await homepage.scrollToGetTheAppButton();  
 });
 
+Then(/^I click on Get The App button$/, async function(){
+    await homepage.clickGetTheAppButton();
+})
+
 Then(/^I search Manhattan, NY$/, async function(){    
     await homepage.searchLocation('Manhattan');
 });
-
+/*
 Then(/^I enter check-in date as Feb-10-2024$/, async function(){
     await homepage.clickDatesButton();
     await homepage.enterCheckInDate("February",12,2024);
@@ -75,6 +87,26 @@ Then(/^I enter check-in date as Feb-10-2024$/, async function(){
 Then(/^I enter check-out date as Feb-16-2024$/, async function(){    
     await homepage.enterCheckInDate("February", 16, 2024);
 });
+
+Then(/^I enter check-in date as Dec-1-2023$/, async function(){  
+    await homepage.clickDatesButton();  
+    await homepage.enterCheckInDate("December", 1, 2023);
+});
+*/
+Then(/^I enter check-( in | out ) date as (\w) ([0-9]+,) ([0-9].{4})&/, async function(dir, month, day, year){
+    if(dir.localeCompare('in')==true){
+        await homepage.clickDatesButton();
+    }
+
+    await homepage.enterCheckInDate(month, day, year);
+});
+
+Then(/^I enter check-out date as Dec-10-2023$/, async function(){    
+    await homepage.enterCheckInDate("February", 16, 2024);
+});
+
+
+
 
 Then(/^I click search button$/, async function(){    
     await homepage.clickDateDoneButton();
@@ -173,3 +205,8 @@ Then(/^I verify total travelers adds up to (.+)$/, async function(total){
     const isVerified = await homepage.verifyTravelersNumbersAddUp(total); 
     expect(isVerified, "Total travelers doesn't add up to previous steps.").to.be.true;
 });
+
+Then(/^I enter (.+) in destination$/, async function(destination){
+    await homepage.searchLocation(destination);
+});
+
