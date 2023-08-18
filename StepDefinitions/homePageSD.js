@@ -78,35 +78,17 @@ Then(/^I click on Get The App button$/, async function(){
 Then(/^I search Manhattan, NY$/, async function(){    
     await homepage.searchLocation('Manhattan');
 });
-/*
-Then(/^I enter check-in date as Feb-10-2024$/, async function(){
-    await homepage.clickDatesButton();
-    await homepage.enterCheckInDate("February",12,2024);
-});
 
-Then(/^I enter check-out date as Feb-16-2024$/, async function(){    
-    await homepage.enterCheckInDate("February", 16, 2024);
-});
-
-Then(/^I enter check-in date as Dec-1-2023$/, async function(){  
-    await homepage.clickDatesButton();  
-    await homepage.enterCheckInDate("December", 1, 2023);
-});
-*/
-Then(/^I enter check-( in | out ) date as (\w) ([0-9]+,) ([0-9].{4})&/, async function(dir, month, day, year){
-    if(dir.localeCompare('in')==true){
+Then(/^I enter check-(in|out) date as ([^\"]*)$/, async function(dir, date){
+    console.log('And dir is:' + dir);
+    if(dir.localeCompare('in')===0){
+        console.log('im in the mainframe');
         await homepage.clickDatesButton();
     }
+    let splitDate = date.split(/[-]/);
 
-    await homepage.enterCheckInDate(month, day, year);
+    await homepage.enterCheckInDate(splitDate[0], splitDate[1], splitDate[2]);
 });
-
-Then(/^I enter check-out date as Dec-10-2023$/, async function(){    
-    await homepage.enterCheckInDate("February", 16, 2024);
-});
-
-
-
 
 Then(/^I click search button$/, async function(){    
     await homepage.clickDateDoneButton();
