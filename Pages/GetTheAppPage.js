@@ -16,7 +16,7 @@ class GetTheAppPage{
     }
 
     async verifyQRCodeIsDisplayed(){
-        return $(this.qrCode).isDisplayed();
+        return $(this.qrCode).waitForExist();
     }
 
     //#endregion

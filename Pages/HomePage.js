@@ -120,7 +120,7 @@ class HomePage{
             while(currentYear!=desiredYear){
                 htmlText = await $(this.leftDate).getHTML(false);
                 currentYear = await htmlText.split(" ")[1];
-                if(currentYear.localeCompare(desiredYear)===true){
+                if(currentYear==desiredYear){
                     break;
                 }
                 else{
@@ -132,7 +132,7 @@ class HomePage{
         }
 
         //Get to month
-        if(desiredMonth>month){
+        if(desiredMonth!=month){
             let currentMonth = "0";
             let htmlText;
             while(currentMonth!=desiredMonth){
@@ -142,6 +142,7 @@ class HomePage{
                     break;
                 }
                 else{
+                    console.log(currentMonth + " and " + desiredMonth);
                     await $(this.calendarForwardButton).click();
                 }
             }
@@ -149,19 +150,32 @@ class HomePage{
 
         const leftMonthDates = await $$(this.leftMonthDateButtons);
         let dateFound = false;
-        for(let elm of leftMonthDates){
-            const day = await elm.getAttribute('data-day');
-            if(day==desiredDay){
-                await $(elm).click();
-                dateFound = true;
-                break;
+        let leftMonthElement = await $(this.leftDate);
+        let leftMonthElementText = await leftMonthElement.getText();
+        let leftMonthElementTextSplit = await leftMonthElementText.split(" ");
+        let leftMonth = leftMonthElementTextSplit[0];
+        
+        if (leftMonth.localeCompare(desiredMonth)==0) {
+          for (let elm of leftMonthDates) {
+            console.log(elm);
+            const day = await elm.getAttribute("data-day");
+            if (day == desiredDay) {
+              console.log("CLICK ME");
+              await $(elm).click();
+              dateFound = true;
+              break;
             }
+          }
+        }   
+        if(dateFound) {
+            console.log("BAILING");
+            return true;
         }
-        if(dateFound) return;
         const rightMonthDates = await $$(this.leftMonthDateButtons);
         for(let elm of rightMonthDates){
             const day = await elm.getAttribute('data-day');
             if(day==desiredDay){
+                console.log("NO, CLICK ME");
                 await $(elm).click();
                 dateFound = true;
                 break;
@@ -279,6 +293,7 @@ class HomePage{
     }
 
     async clickDateDoneButton(){
+        await $(this.dateDoneButton).isClickable();
         await $(this.dateDoneButton).click();
     }
 
@@ -358,6 +373,9 @@ class HomePage{
 
         //Verify above statement
         const highestDate = Math.max(...disabledDatesArray);
+
+        console.log(date + " and " + highestDate);
+        console.log(...disabledDatesArray);
 
         if(date==highestDate){
             return true;

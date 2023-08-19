@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//div[@data-stid='property-listing-results']/child::div[@class='uitk-spacing uitk-spacing-margin-blockstart-three'][1]//div[@class='uitk-text uitk-type-500 uitk-type-medium uitk-text-emphasis-theme']"
+}

@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//h2[contains(text(), 'Scan the QR code and download our app')]"
+}

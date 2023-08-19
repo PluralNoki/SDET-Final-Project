@@ -8,7 +8,8 @@ class SignInPage{
         //Buttons
     continueButton = "//button[@id='loginFormSubmitButton']";
         //Messages
-    errorMessage = "//div[@id='loginFormEmailInput-error']"
+    errorMessage = "//div[@id='loginFormEmailInput-error']" //cdn
+    enterAValidEmail = "//div[contains(text(),'Enter a valid email.')]";
         //Links
     oneKeyTermsLink = "//a[contains(text(), 'One Key Rewards Terms & Conditions')]";
 
@@ -31,6 +32,16 @@ class SignInPage{
     async clickOneKeyTermsAndConditionsLink(){
         await $(this.oneKeyTermsLink).click();
     }
+
+    async verifyErrorMessage(){
+        return await $(this.errorMessage).waitForDisplayed();
+    }
+
+    async verifyContinueButtonIsEnabled(){
+        return await $(this.continueButton).waitForEnabled();
+    }
+
+    
 
 }
 

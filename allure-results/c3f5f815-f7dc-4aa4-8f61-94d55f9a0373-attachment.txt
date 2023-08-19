@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//input[@id='traveler_selector_adult_step_input-0']/following-sibling::button"
+}

@@ -9,7 +9,8 @@ Neither clicking Continue as the email must be verified
         Given I am on hotels website   
         Then I click on the sign in link
         And I click on the sign up button
-        When I enter 'user\@test.com' in email address
+        When I enter user@test.com in email address
+        //Broken here - no name field to enter
         And I enter fUser in First name
         And I enter lUser in Last name
         And I enter <password> in Password

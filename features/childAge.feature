@@ -16,6 +16,6 @@ Feature: Child-Ages
         And I verify plus-button is enabled
         And I verify minus-button is enabled
         And I set children to 0
-        And I verify children-age dropdowns are not displayed
+        And I verify children-age dropdowns aren't displayed
         And I verify plus-button is enabled
         And I verify minus-button is disabled

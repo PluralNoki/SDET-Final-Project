@@ -25,3 +25,13 @@ Then(/^I verify all hotels are listed in increasing price order$/, async functio
     const inOrder = await hotelsSearchPage.verifyPricesListedLowToHigh();
     expect(inOrder, 'Hotel Prices are NOT in order of lowest to highest').to.be.true;
 });
+
+Then(/^I verify Tell Us How We Can Improve Our Site is displayed$/, async function(){    
+    const isDisplayed = await hotelsSearchPage.verifyImproveOurFeedbackIsDisplayed();
+    expect(isDisplayed, "Tell Us How We Can Improve Our Site is NOT displayed").to.be.true;
+});
+
+Then(/^I verify Share Feedback button is displayed and enabled$/, async function(){    
+    const isDisplayedAndEnabled = await hotelsSearchPage.verifyShareFeedbackButtonIsDisplayedAndEnabled();
+    expect(isDisplayedAndEnabled, "Share Feedback Button is NOT displayed").to.be.true;
+});

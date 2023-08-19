@@ -10,6 +10,10 @@ class HotelsSearchPage {
         //misc
     pricesOfPlaces = "//div[@class='uitk-text uitk-type-500 uitk-type-medium uitk-text-emphasis-theme']";
     ratingsOfPlaces = "//div[@data-stid='property-listing-results']//child::div[@class='uitk-rating']/child::span";
+        //text
+    improveOurFeedback = "//span[contains(text(),'Tell us how we can improve our site')]";
+        //button
+    shareFeedback = "//a[contains(text(),'Share feedback')]";
 
     //--INTERACTIVE FUNCTIONS FOR HOMEPAGE--//
 
@@ -63,6 +67,16 @@ class HotelsSearchPage {
             }
         }
         return true;
+    }
+
+    async verifyImproveOurFeedbackIsDisplayed(){
+        return await $(this.improveOurFeedback).waitForDisplayed();
+    }
+
+    async verifyShareFeedbackButtonIsDisplayedAndEnabled(){
+        let isDisplayed = $(this.improveOurFeedback).waitForDisplayed();
+        let isEnabled = $(this.improveOurFeedback).waitForEnabled();
+        return (isDisplayed && isEnabled);
     }
 
     //#endregion

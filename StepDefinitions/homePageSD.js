@@ -91,8 +91,11 @@ Then(/^I enter check-(in|out) date as ([^\"]*)$/, async function(dir, date){
 });
 
 Then(/^I click search button$/, async function(){    
-    await homepage.clickDateDoneButton();
     await homepage.clickSearchButton();
+});
+
+Then(/^I click the date done button$/, async function(){    
+    await homepage.clickDateDoneButton();
 });
 
 Then(/^I click on support$/, async function(){    
@@ -120,27 +123,21 @@ Then(/^I click travelers done button$/, async function(){
     return await homepage.clickTravelersDoneButton();
 });
 
+Then(/^I click date done button$/, async function(){
+    await homepage.clickDateDoneButton();
+});
+
 Then(/^I make age of child (.+) to (.+)$/, async function(child, age){
     if(age=='under 1') age = 0;
     await homepage.setChildAge(child,age);
 });
 
-Then(/^I verify children-age dropdowns are 2$/, async function(){
+Then(/^I verify children-age dropdowns are ([0-9])$/, async function(age){
     const childrenDropdowns = await homepage.getAmountOfChildrenAgeDropDowns();
-    expect(childrenDropdowns==2, 'Children Dropdowns are NOT two (as expected)').to.be.true;
+    expect(childrenDropdowns==age, 'Children Dropdowns are NOT two (as expected)').to.be.true;
 });
 
-Then(/^I verify children-age dropdowns are 5$/, async function(){
-    const childrenDropdowns = await homepage.getAmountOfChildrenAgeDropDowns();
-    expect(childrenDropdowns==5, 'Children Dropdowns are NOT five (as expected)').to.be.true;
-});
-
-Then(/^I verify children-age dropdowns are 6$/, async function(){
-    const childrenDropdowns = await homepage.getAmountOfChildrenAgeDropDowns();
-    expect(childrenDropdowns==6, 'Children Dropdowns are NOT six (as expected)').to.be.true;
-});
-
-Then(/^I verify children-age dropdowns are not displayed$/, async function(){
+Then(/^I verify children-age dropdowns aren't displayed$/, async function(){
     const childrenDropdown = await homepage.getAmountOfChildrenAgeDropDowns();
     expect(childrenDropdown==0, 'Children Dropdown are NOT zero').to.be.true;
 });

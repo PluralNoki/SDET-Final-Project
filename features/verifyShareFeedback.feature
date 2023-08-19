@@ -5,3 +5,9 @@ Feature: Verify Share Feedback
     And I enter Bora in destination
     And I enter check-in date as December-1-2023
     And I enter check-out date as December-10-2023
+    And I click date done button
+    And I click search button
+    Then I verify Tell Us How We Can Improve Our Site is displayed
+    Then I verify Share Feedback button is displayed and enabled
+
+    
