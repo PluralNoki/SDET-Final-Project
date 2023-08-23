@@ -149,6 +149,7 @@ class ListYourPropertyPage{
         //the autosuggestions.
 
         await $(this.addressInput).click();
+        await browser.pause(1500);
         await $(this.addressInput).setValue(address);
     }
 

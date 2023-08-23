@@ -16,6 +16,12 @@ Given(/^I am in USA location$/, async function (){
     await browser.pause(1500);
 });
 
+Given(/^I am in usa region$/, async function(){
+    await homepage.clickLanguageSelector();
+    await homepage.clickUSARegion();
+    await homepage.clickSaveButton();
+});
+
 Then(/^I click on the sign up button$/, async function(){    
     await homepage.clickSignUpButton();
 });
@@ -41,20 +47,37 @@ Then(/^I select French in language dropdown$/, async function(){
     await homepage.clickFrenchInLanguageDropdown();
 });
 
+Then(/^I click language selector$/, async function(){
+    await homepage.clickLanguageSelector();
+});
+
+Then(/^I click spanish language$/, async function(){
+    await homepage.clickSpanishInLanguageDropdown();
+});
+
 Then(/^I click save button$/, async function(){    
     await homepage.clickSaveButton();
 });
 
 Then(/^I verify French is displayed$/, async function(){    
-    const frenchIsDisplayed = await homepage.verifyFrenchIsDisplayed();
+    const frenchIsDisplayed = await homepage.verifyLanguageIsDisplayed("en_FR");
     expect(frenchIsDisplayed, 'French is NOT displayed').to.be.true;
+});
+
+Then(/^I verify spanish is displayed$/, async function(){
+    const isDispayed = await homepage.verifyLanguageIsDisplayed("es_US");
+    expect(isDispayed, 'Spanish is NOT displayed').to.be.true;
 });
 
 Then(/^I click on French language$/, async function(){    
     await homepage.clickEnglishButton();
 });
 
-Then(/^I select English in langauge dropdown$/, async function(){    
+Then(/^I click guardar button$/, async function(){
+    await homepage.clickGuardarButton();
+});
+
+Then(/^I select English in language dropdown$/, async function(){    
     await homepage.clickEnglishInLanguageDropdown();
 });
 
@@ -63,8 +86,9 @@ Then(/^I click on Enregistrer button$/, async function(){
 });
 
 Then(/^I verify English is displayed$/, async function(){    
-    const englishIsDisplayed = await homepage.verifyEnglishIsDisplayed();
-    expect(englishIsDisplayed, 'English is NOT displayed').to.be.true;
+    const englishIsDisplayed = await homepage.verifyLanguageIsDisplayed("en_CA");
+    const usaEnglishIsDisplayed = await homepage.verifyLanguageIsDisplayed("en_US");
+    expect(englishIsDisplayed || usaEnglishIsDisplayed, 'English is NOT displayed').to.be.true;
 });
 
 Then(/^I scroll to Get the app button$/, async function(){  

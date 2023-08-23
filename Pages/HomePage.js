@@ -26,8 +26,11 @@ class HomePage{
     englishButton = "//button[@data-stid='button-type-picker-trigger']";
     languageSelector = "//select[@id='language-selector']";
     frenchSelector =  "//option[@value='fr_CA']";
-    englishSelector = "//option[@value='en_CA']";
+    canadaEnglishSelector = "//option[@value='en_CA']";
+    usEnglishSelector = "//option[@value='en_US']";
+    spanishSelector = "//option[@value='es_US']";
     saveButton = "//button[text()='Save']";
+    guardarButton = "//button[text()='Guardar']"
     enregistrerButton = "//button[text()='Enregistrer']";
     regionSelector = "//select[@id='site-selector']";
     usaRegion = "//select[@id='site-selector']/child::option[@value='300000001']";
@@ -247,15 +250,27 @@ class HomePage{
     }
 
     async clickLanguageSelector(){
-        return await $(this.languageSelector).click();
+        return await $(this.englishButton).click();
     }
 
     async clickFrenchInLanguageDropdown(){
         return await $(this.frenchSelector).click();
     }
 
+    async clickGuardarButton(){
+        return await $(this.guardarButton).click();
+    }
+
     async clickEnglishInLanguageDropdown(){
-        return await $(this.englishSelector).click();
+        const dispLang = await this.getLanguageDisplayed();
+        if(dispLang.includes('US')){
+            return await $(this.usEnglishSelector).click();
+        }
+        else return await $(this.canadaEnglishSelector).click();
+    }
+
+    async clickSpanishInLanguageDropdown(){
+        return await $(this.spanishSelector).click();
     }
 
     async clickSaveButton(){
@@ -337,17 +352,10 @@ class HomePage{
         return button.isEnabled();
     }
 
-    async verifyFrenchIsDisplayed(){
-        const language = await this.getLanguageDisplayed();
-        if(language=='fr_CA'){
-            return true;
-        }
-        else return false;
-    }
 
-    async verifyEnglishIsDisplayed(){
-        const language = await this.getLanguageDisplayed();
-        if(language=="en_CA"){
+    async verifyLanguageIsDisplayed(desiredLanguage){
+        const displayedLanguage = await this.getLanguageDisplayed();
+        if(displayedLanguage==desiredLanguage){
             return true;
         }
         else return false;
