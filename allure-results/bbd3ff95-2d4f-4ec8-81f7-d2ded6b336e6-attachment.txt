@@ -1,0 +1,5 @@
+{
+  "error": "no such element",
+  "message": "no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//option[@value='es_US']\"}\n  (Session info: chrome=116.0.5845.96)",
+  "stacktrace": "\tGetHandleVerifier [0x00007FF6658B52A2+57122]\n\t(No symbol) [0x00007FF66582EA92]\n\t(No symbol) [0x00007FF6656FE3AB]\n\t(No symbol) [0x00007FF665737D3E]\n\t(No symbol) [0x00007FF665737E2C]\n\t(No symbol) [0x00007FF665770B67]\n\t(No symbol) [0x00007FF66575701F]\n\t(No symbol) [0x00007FF66576EB82]\n\t(No symbol) [0x00007FF665756DB3]\n\t(No symbol) [0x00007FF66572D2B1]\n\t(No symbol) [0x00007FF66572E494]\n\tGetHandleVerifier [0x00007FF665B5EF82+2849794]\n\tGetHandleVerifier [0x00007FF665BB1D24+3189156]\n\tGetHandleVerifier [0x00007FF665BAACAF+3160367]\n\tGetHandleVerifier [0x00007FF665946D06+653702]\n\t(No symbol) [0x00007FF66583A208]\n\t(No symbol) [0x00007FF6658362C4]\n\t(No symbol) [0x00007FF6658363F6]\n\t(No symbol) [0x00007FF6658267A3]\n\tBaseThreadInitThunk [0x00007FFCED047614+20]\n\tRtlUserThreadStart [0x00007FFCEEE226B1+33]\n"
+}

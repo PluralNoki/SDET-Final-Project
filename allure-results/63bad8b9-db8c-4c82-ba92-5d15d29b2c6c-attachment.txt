@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//table[@id='OTable']/child::tbody/child::tr[1]/child::td/child::input"
+}

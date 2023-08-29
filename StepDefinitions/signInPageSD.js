@@ -11,12 +11,12 @@ Then(/^I enter an invalid email address$/, async function(){
     await signinpage.enterTextIntoEmailProvider('hullabaloo');
 });
 
-Then(/^I click on the continue button$/, async function(){
+Then(/^I click on the sign-in continue button$/, async function(){
     await signinpage.clickContinueButton();
     await browser.pause(3000);
 });
 
-Then(/^I verify error message is displayed$/, async function(){
+Then(/^I verify sign-in error message is displayed$/, async function(){
     const errorMessageIsEnabled = await signinpage.confirmErrorMessageExists();
     expect(errorMessageIsEnabled, 'Error Message is NOT showing').to.be.true;
 });
@@ -27,10 +27,6 @@ When(/^I enter (.+) in email address$/, async function(text){
 
 Then(/^I click One Key Rewards Terms and Conditions link$/, async function(){
     await signinpage.clickOneKeyTermsAndConditionsLink();
-});
-
-Then(/^I enter (.+) in (First|Last) name $/, async function(enter, name){
-    //not working
 });
 
 Then(/^I click signin continue button$/, async function(){

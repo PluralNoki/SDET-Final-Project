@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//button[@id='traveler_selector_done_button']"
+}

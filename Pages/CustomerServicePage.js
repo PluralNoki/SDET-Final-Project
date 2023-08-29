@@ -24,12 +24,6 @@ class CustomerServicePage{
         return await $(this.overallFeedbackTextPostEmptySubmit).isDisplayed();
     }
 
-    async verifyErrorMessageIsDisplayed(){
-        //Unfinished
-        //Comment posted in circle
-        //Awaiting response
-    }
-
     //#endregion
 }
 

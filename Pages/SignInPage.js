@@ -25,7 +25,7 @@ class SignInPage{
 
     async confirmErrorMessageExists(){
         const errMsg = await $(this.errorMessage);
-        const errMsgStatus = await errMsg.isDisplayed();
+        const errMsgStatus = await $(this.errorMessage).isDisplayed();
         return errMsgStatus;
     }
  

@@ -250,7 +250,7 @@ class HomePage{
     }
 
     async clickLanguageSelector(){
-        return await $(this.englishButton).click();
+        return await $(this.languageSelector).click();
     }
 
     async clickFrenchInLanguageDropdown(){
@@ -305,6 +305,7 @@ class HomePage{
 
     async clickOnDates(){
         await $(this.datesButton).click();
+        await $("//div[@class='uitk-date-picker date-picker-menu']").waitForExist();
     }
 
     async clickDateDoneButton(){
@@ -362,6 +363,8 @@ class HomePage{
     }
 
     async verifyPastDatesAreDisabled(){
+        await $("//div[@class='uitk-date-picker date-picker-menu']").waitForExist();
+
         //Current date
         let date = new Date().getDate();
 

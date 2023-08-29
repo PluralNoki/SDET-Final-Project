@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha \"test/**/*.test.js\" --timeout 60000 --exit",
+    "test": "mocha \"features/*.feature\" --timeout 60000 --exit",
     "wdio": "wdio run ./wdio.conf.js"
   },
   "keywords": [],

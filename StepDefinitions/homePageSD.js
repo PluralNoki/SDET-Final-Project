@@ -42,6 +42,7 @@ Then(/^I click on English language$/, async function(){
     await homepage.clickEnglishButton();    
 });
 
+
 Then(/^I select French in language dropdown$/, async function(){    
     await homepage.clickLanguageSelector();
     await homepage.clickFrenchInLanguageDropdown();
@@ -60,7 +61,7 @@ Then(/^I click save button$/, async function(){
 });
 
 Then(/^I verify French is displayed$/, async function(){    
-    const frenchIsDisplayed = await homepage.verifyLanguageIsDisplayed("en_FR");
+    const frenchIsDisplayed = await homepage.verifyLanguageIsDisplayed("fr_CA");
     expect(frenchIsDisplayed, 'French is NOT displayed').to.be.true;
 });
 

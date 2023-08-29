@@ -27,42 +27,41 @@ class CommentCardPage{
     }
 
     async selectAnyOverallRating(){
-        const buttons = await $$(this.overallButtons);
-        const rating  = 5;
-        return await buttons[rating].click();
+        const rating  = 4; //array index 4 means 5 stars
+        return await $$(this.overallButtons)[rating].click();
     }
 
     async selectAnyContentRating(){
-        const buttons = await $$(this.contentButtons);
-        const rating  = 5;
-        return await buttons[rating].click();
+        const rating  = 4;
+        return await $$(this.contentButtons)[rating].click();
     }
 
     async selectAnyDesignRating(){
-        const buttons = await $$(this.designButtons);
-        const rating  = 5;
-        return await buttons[rating].click();
+        const rating  = 4;
+        return await $$(this.designButtons)[rating].click();
     }
 
     async selectAnyEaseOfUseRating(){
-        const buttons = await $$(this.easeOfUseButtons);
-        const rating  = 5;
-        return await buttons[rating].click();
+        const rating  = 4;
+        return await $$(this.easeOfUseButtons)[rating].click();
     }
 
     //#endregion
 
     async focusOnCommentCardPage(){
-        const handles = browser.getWindowHandles();
+        const handles = await browser.getWindowHandles();
         const desiredWindow = 'Comment Card';
 
         for(const handle of handles){
             await browser.switchToWindow(handle);
             const windowTitle = await browser.getTitle();
             if(handle.localeCompare(desiredWindow)===0){
+                console.log("IT WORKED???");
                 break;
             }
         }
+
+        console.log("BROKEN?!?!?!");
     }
 
 
